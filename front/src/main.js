@@ -6,9 +6,9 @@ import router from "./router.js";
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
-window.axios = axios;
+axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
 
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios = axios;
 window.axios.defaults.baseURL = 'http://localhost:8000'
 
 
