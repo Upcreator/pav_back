@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>License Notification</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-size: cover;
+            background-repeat: no-repeat;
+        }
+        .container {
+            max-width: 500px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .header {
+            background: #C41E3A;
+            text-align: center;
+            padding: 20px 0;
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+        .content {
+            padding: 30px;
+        }
+        .footer {
+            background: #CD5C5C;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            font-size: 12px;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Уведомление</h2>
+        </div>
+        <div class="content">
+            <p>Здраствуйте,</p>
+            <p>Вы успешно создали лицензионный ключ, <strong>{{ license_uuid }}</strong>.</p>
+            <p>Скачайте приложение на <a>Платформе</a> активируйте лицензионный ключ.</p>
+        </div>
+        <div class="footer">
+            <p>© 2024 "PavAPP". All rights reserved.</p>
+        </div>
+    </div>
+</body>
+</html>
