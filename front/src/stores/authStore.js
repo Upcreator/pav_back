@@ -1,4 +1,6 @@
 import { defineStore } from 'pinia'
+import axios from "axios";
+import {jwtDecode} from "jwt-decode";
 
 // You can name the return value of `defineStore()` anything you want,
 // but it's best to use the name of the store and surround it with `use`
@@ -12,9 +14,12 @@ export const useAuthStore = defineStore('authStore', {
     },
     actions: {
         async getUser(){
-            console.log(123)
-            const data = await axios.get('api/users/1')
-            console.log(data);
+            const token = localStorage.getItem('access_token')
+            if(token){
+                this.user = jwtDecode(token)
+                return;
+            }
+            throw DOMException("Unauth.")
         }
     }
 

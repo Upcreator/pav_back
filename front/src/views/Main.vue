@@ -4,13 +4,32 @@ import Header from "@/components/Header.vue";
 import {ArrowDownTrayIcon, ChartBarIcon, ClockIcon, WrenchScrewdriverIcon} from "@heroicons/vue/24/solid/index.js";
 import Button from "@/components/Button.vue";
 import {useAuthStore} from "@/stores/authStore.js";
+import {ref} from "vue";
 const authStore = useAuthStore()
+const licenseName = ref(null)
+
+const createLicense = () => {
+  const user = authStore.user
+
+  axios.post('api/licenses/', {
+    "name": licenseName.value,
+    "is_Activated": false,
+    "user": user.user_id,
+    headers:{
+      "Authorization": `Bearer ${localStorage.getItem('access_token')}`
+    }
+  })
+      .catch(e => {
+        console.log(e);
+      })
+}
+
+
 
 </script>
 
 <template>
   <Header></Header>
-  {{authStore.user}}
   <div class="max-w-7xl p-1 m-auto my-10">
     <div class="grid md:grid-cols-2 gap-5">
       <div
@@ -22,12 +41,13 @@ const authStore = useAuthStore()
           class="bg-gray-900/70 border border-gray-700/90 shadow-xl text-white p-5 rounded-2xl">
         <p class="mb-5">Введите название вашей лицензии</p>
         <input
+            v-model="licenseName"
             type="text"
             id="title"
             class="bg-gray-50 my-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Название"
             required/>
-        <Button class="flex items-center justify-center gap-5">Создать</Button>
+        <Button @click="createLicense" class="flex items-center justify-center gap-5">Создать</Button>
       </div>
 
     </div>

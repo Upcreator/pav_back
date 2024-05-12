@@ -33,7 +33,7 @@ class UserRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
 class LicenseModelListCreateAPIView(generics.ListCreateAPIView):
     queryset = LicenseModel.objects.all()
     serializer_class = LicenseModelSerializer
-    #permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     def post(self, request, *args, **kwargs):
         user = request.user
         # Count the number of licenses associated with the user
