@@ -12,12 +12,12 @@ class App(CTk):
     def __init__(self, **kw):
         super().__init__( **kw)
         self.geometry(f"{self.app_width}x{self.app_height}")
-        #self.geometry("750x550")
         self.title("PavApp")
+        self.iconbitmap("logo.ico")
         self.resizable(0,0)
         set_appearance_mode("dark")
         self.center_window()
-
+        self.haveLicenseActive = False
         self.build_sidebar_ui()
 
         self.main_view = CTkFrame(master=self, fg_color="#204B6B", corner_radius=0, width=580, height=550)
@@ -107,6 +107,7 @@ class App(CTk):
             "client": self.client.get(),
             "problem_description": self.description.get(),
             "status": self.status_var.get(),
+            "fault_type": self.fault_type_var.get(),
             
         }
 
@@ -152,10 +153,10 @@ class App(CTk):
 
         self.fault_type_var = tkinter.StringVar(value="Комп не работает")
 
-        CTkRadioButton(master=grid, variable=self.status_var, value="Комп не работает", text="Комп не работает", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=3, column=1, sticky="w", pady=(16,0))
-        CTkRadioButton(master=grid, variable=self.status_var, value="Wi-fi глючит", text="Wi-fi глючит", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=4, column=1, sticky="w", pady=(16,0))
-        CTkRadioButton(master=grid, variable=self.status_var, value="Excel залагал", text="Excel залагал", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=5, column=1, sticky="w", pady=(16,0))
-        """CTkLabel(master=grid, text="Надо убрать", font=("Arial Bold", 17), text_color="#fff", justify="left").grid(row=2, column=1, sticky="w", pady=(20, 0), padx=(25,0))
+        CTkRadioButton(master=grid, variable=self.fault_type_var, value="Комп не работает", text="Комп не работает", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=3, column=1, sticky="w", pady=(16,0))
+        CTkRadioButton(master=grid, variable=self.fault_type_var, value="Wi-fi глючит", text="Wi-fi глючит", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=4, column=1, sticky="w", pady=(16,0))
+        CTkRadioButton(master=grid, variable=self.fault_type_var, value="Excel залагал", text="Excel залагал", font=("Arial Bold", 14), text_color="#fff", fg_color="#fff", border_color="#fff", hover_color="#F49A44").grid(row=5, column=1, sticky="w", pady=(16,0))
+        """CTkLabel(master=grid, text="Фича", font=("Arial Bold", 17), text_color="#fff", justify="left").grid(row=2, column=1, sticky="w", pady=(20, 0), padx=(25,0))
 
         self.quantity = 1
 
@@ -166,7 +167,8 @@ class App(CTk):
         self.quantity_label.pack(side="left", anchor="w", padx=10)
         CTkButton(master=quantity_frame, text="+", width=25, text_color="#B0510C", fg_color="#fff", hover_color="#d6d6d6", font=("Arial Black", 16),  command=lambda: self.update_quantity(self.quantity+1)).pack(side="left", anchor="w")"""
 
-        CTkButton(master=self.main_view, text="Создать", width=300, font=("Arial Bold", 17), hover_color="#B0510C", fg_color="#EE6B06", text_color="#fff", command=self.create_order).pack(fill="both", side="bottom", pady=(0, 25), ipady=10, padx=(27,27))
+        if self.haveLicenseActive:
+            CTkButton(master=self.main_view, text="Создать", width=300, font=("Arial Bold", 17), hover_color="#B0510C", fg_color="#EE6B06", text_color="#fff", command=self.create_order).pack(fill="both", side="bottom", pady=(0, 25), ipady=10, padx=(27,27))
 
     def build_license_activate_ui(self):
         CTkLabel(master=self.main_view, text="Активация Лицензии", font=("Arial Black", 25), text_color="#fff").pack(anchor="nw", pady=(29,0), padx=27)
@@ -190,16 +192,15 @@ class App(CTk):
         }
 
         input_data = {
-            #"key": self.license_key.get(),
         }
 
         response = requests.patch(url, json=input_data, headers=headers)
         response_data = response.json()
         
-        print(response_data)
         if response.status_code == 200:
             CTkMessagebox(title="Успешно", message="Лицензия активирована!", icon="check")
             self.license_key.delete(0, 'end')
+            self.haveLicenseActive = True
         else:
             error_message = response_data["error"]["message"]
             CTkMessagebox(title="Error", message=error_message, icon="cancel")
@@ -227,22 +228,8 @@ class App(CTk):
 
         table_data = [
             ["Номер", "Клиент", "Описание", "Статус", "Время создания"],
-            # ["MacBook Pro", "John Doe", "123 Main St", "Shipped", "1"],
-            # ["Galaxy S21", "Jane Smith", "456 Park Ave", "Delivered", "2"],
-            # ["PlayStation 5", "Bob Johnson", "789 Broadway", "Processing", "1"],
         ]
 
-        """for doc in response_data["documents"]:
-            row = []
-            if "fields" in doc:
-                fields = doc["fields"]
-                row.append(fields["ticket_number"]["stringValue"])
-                row.append(fields["client"]["stringValue"])
-                row.append(fields["description"]["stringValue"])
-                row.append(fields["status"]["stringValue"])
-                row.append(fields["created_at"]["timestampValue"])
-            
-                table_data.append(row)"""
         if isinstance(response_data, list):
             for doc in response_data:
                 row = []
@@ -272,16 +259,13 @@ class App(CTk):
     def login_handler(self):
         input_data = {
             "username": self.username.get(),
-            #"email": self.email.get(),
             "password": self.password.get(),
-            #"returnSecureToken": True
         }
 
         response = requests.post("http://127.0.0.1:8000/api/token/", 
                                   json=input_data)
 
         response_data = response.json()
-
         if response.status_code == 200:
             self.access_token = response_data["access"]
             self.refresh_token = response_data["refresh"]
@@ -289,8 +273,6 @@ class App(CTk):
             CTkMessagebox(icon="check", message="Авторизация успешна")
         else:
             CTkMessagebox(icon="cancel", message="Неверный логин или пароль")
-            #error_message = response_data["error"]["message"]
-            #CTkMessagebox(icon="cancel", message=error_message)
 
     def build_login_ui(self):
        CTkLabel(master=self.main_view, text="Логин", font=("Arial Black", 25), text_color="#fff").pack(anchor="nw", pady=(29,0), padx=27)
