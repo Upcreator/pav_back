@@ -1,3 +1,6 @@
 /back/env
+/back/back/__pycache__
 /front/node_modules
 db.sqlite3
+**/__pycache__/
+__pycache__/

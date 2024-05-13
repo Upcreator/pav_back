@@ -27,7 +27,7 @@ const createLicense = () => {
         success.value = true
       })
       .catch(e => {
-        error.value = "У вас больше 3 лицензий"
+        error.value = "У вас уже есть лицензия"
       })
 }
 
