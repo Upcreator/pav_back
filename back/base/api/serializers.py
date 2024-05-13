@@ -27,10 +27,10 @@ class LicenseModelSerializer(serializers.ModelSerializer):
         user = license_instance.user
         if user:
             email = user.email
-            html_content = render_to_string('email_license.html', {'license_uuid': license_instance.key})
+            html_content = render_to_string('email_license.html', {'license_uuid': license_instance.key, 'name': license_instance.name})
             text_content = strip_tags(html_content)
             send_mail(
-                subject="This is your license",
+                subject="Вот ваша лицензия",
                 message=text_content,
                 from_email=settings.EMAIL_HOST_USER,
                 recipient_list=[email],
@@ -57,3 +57,8 @@ class UserSerializer(serializers.ModelSerializer):
         user.set_password(validated_data['password'])
         user.save()
         return user
+    
+class TicketSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = TicketModel
+        fields = "__all__"

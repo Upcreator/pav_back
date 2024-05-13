@@ -19,6 +19,9 @@ const createLicense = () => {
       "Authorization": `Bearer ${localStorage.getItem('access_token')}`
     }
   })
+      .then(() => {
+        licenseName.value = null;
+      })
       .catch(e => {
         console.log(e);
       })

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>License Notification</title>
+    <title>Уведомление о лицензии</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -50,8 +50,9 @@
         </div>
         <div class="content">
             <p>Здраствуйте,</p>
-            <p>Вы успешно создали лицензионный ключ, <strong>{{ license_uuid }}</strong>.</p>
-            <p>Скачайте приложение на <a>Платформе</a> активируйте лицензионный ключ.</p>
+            <p>Вы успешно создали лицензию "<strong>{{ name }}</strong>".</p>
+            <p>Лицензионный ключ: <strong>{{ license_uuid }}</strong></p>
+            <p>Скачайте приложение на <a href="http://localhost:5173/">Платформе</a> активируйте лицензионный ключ.</p>
         </div>
         <div class="footer">
             <p>© 2024 "PavAPP". All rights reserved.</p>

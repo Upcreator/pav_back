@@ -62,3 +62,13 @@ class LicenseActivateAPIView(generics.UpdateAPIView):
 class LicenseModelRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
     queryset = LicenseModel.objects.all()
     serializer_class = LicenseModelSerializer
+
+class TicketListCreateAPIView(generics.ListCreateAPIView):
+    queryset = TicketModel.objects.all()
+    serializer_class = TicketSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+
+class TicketRetrieveUpdateDestroyAPIView(generics.RetrieveUpdateDestroyAPIView):
+    queryset = TicketModel.objects.all()
+    serializer_class = TicketSerializer

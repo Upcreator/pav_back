@@ -7,6 +7,9 @@ urlpatterns = [
     path('licenses/<int:pk>/', LicenseModelRetrieveUpdateDestroyAPIView.as_view()),
     path('licenses/<uuid:key>/activate/', LicenseActivateAPIView.as_view(), name='license_activate'),
 
+    path('tickets/', TicketListCreateAPIView.as_view()),
+    path('tickets/<int:pk>/', TicketRetrieveUpdateDestroyAPIView.as_view()),
+    
     path('users/', UserListCreateAPIView.as_view()),
     path('users/<int:pk>/', UserRetrieveUpdateDestroyAPIView.as_view()),
 

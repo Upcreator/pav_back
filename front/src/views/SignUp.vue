@@ -2,6 +2,22 @@
 
 import Button from "../components/Button.vue";
 import router from "@/router.js";
+import {ref} from "vue";
+import axios from "axios";
+
+const email = ref(null)
+const username = ref(null)
+const password = ref(null)
+
+const signup = () => {
+  axios.post('api/users/', {email: email.value, username: username.value, password: password.value})
+      .then((d) => {
+        router.push({name: 'login'})
+      })
+      .catch((e) => {
+        console.log(e);
+      })
+}
 </script>
 
 <template>
@@ -18,18 +34,28 @@ import router from "@/router.js";
       <p class="text-3xl font-extrabold">Создайте аккаунт</p>
       <div class="w-full lg:px-40 p-2 mt-10">
         <input
+            v-model="email"
             type="email"
             id="email"
-            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Введите свою почту"
             required/>
+
         <input
+            v-model="username"
+            type="username"
+            id="username"
+            class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            placeholder="Введите свой логин"
+            required/>
+        <input
+            v-model="password"
             type="password"
             id="password"
             class="bg-gray-50 mt-2 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             placeholder="Введите пароль"
             required/>
-        <Button class="mt-2 text-sm">
+        <Button @click="signup"class="mt-2 text-sm">
           Создать
         </Button>
       </div>
