@@ -9,6 +9,8 @@ const authStore = useAuthStore()
 const licenseName = ref(null)
 
 const createLicense = () => {
+  error.value = false
+  success.value = false
   const user = authStore.user
 
   axios.post('api/licenses/', {
@@ -22,19 +24,27 @@ const createLicense = () => {
   })
       .then(() => {
         licenseName.value = null;
+        success.value = true
       })
       .catch(e => {
-        console.log(e);
+        error.value = "У вас больше 3 лицензий"
       })
 }
 
-
+const success = ref(false)
+const error = ref(false)
 
 </script>
 
 <template>
   <Header></Header>
   <div class="max-w-7xl p-1 m-auto my-10">
+    <div v-if="success" class="bg-green-500/20 p-5 mb-5 rounded-2xl">
+      <p class="text-sm text-green-500">Ваша лицензия успешно создана. Проверьте почту</p>
+    </div>
+    <div v-if="error" class="bg-red-500/20 p-5 mb-5 rounded-2xl">
+      <p class="text-sm text-red-500">{{error}}</p>
+    </div>
     <div class="grid md:grid-cols-2 gap-5">
       <div
           class="bg-gray-900/70 h-fit border border-gray-700/90 shadow-xl text-white p-5 rounded-2xl">
