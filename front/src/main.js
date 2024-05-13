@@ -13,12 +13,12 @@ window.axios.defaults.baseURL = 'http://localhost:8000'
 
 
 
-axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem('access_token')}`
-
-axios.interceptors.request.use((req) => {
-    axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem('access_token')}`
-    return req
-})
+// axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem('access_token')}`
+//
+// axios.interceptors.request.use((req) => {
+//     axios.defaults.headers["Authorization"] = `Bearer ${localStorage.getItem('access_token')}`
+//     return req
+// })
 
 
 const pinia = createPinia()

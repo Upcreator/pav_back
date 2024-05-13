@@ -15,6 +15,7 @@ const createLicense = () => {
     "name": licenseName.value,
     "is_Activated": false,
     "user": user.user_id,
+  }, {
     headers:{
       "Authorization": `Bearer ${localStorage.getItem('access_token')}`
     }
@@ -38,7 +39,11 @@ const createLicense = () => {
       <div
           class="bg-gray-900/70 h-fit border border-gray-700/90 shadow-xl text-white p-5 rounded-2xl">
         <p class="mb-5">Скачать наше приложение</p>
-        <Button class="flex items-center justify-center gap-5">Скачать <ArrowDownTrayIcon class="h-5"/></Button>
+        <a href="app.exe" target="_blank" class="w-full
+        flex items-center justify-center gap-5
+         text-xl bg-gray-900/70  hover:bg-gray-900/40 transition rounded-lg p-2 text-white">
+          Скачать <ArrowDownTrayIcon class="h-5"/>
+        </a>
       </div>
       <div
           class="bg-gray-900/70 border border-gray-700/90 shadow-xl text-white p-5 rounded-2xl">
