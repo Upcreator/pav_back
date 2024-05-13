@@ -37,7 +37,7 @@ class LicenseModelListCreateAPIView(generics.ListCreateAPIView):
     def post(self, request, *args, **kwargs):
         user = request.user
         num_licenses = LicenseModel.objects.filter(user=user).count()
-        if num_licenses < 2:
+        if num_licenses < 1:
             return super().post(request, *args, **kwargs)
         else:
             return Response({'message': 'У вас уже есть лицензия'}, status=status.HTTP_400_BAD_REQUEST)
