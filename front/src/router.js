@@ -58,7 +58,7 @@ router.beforeEach((to, from, next) => {
                 next()
             })
             .catch(() => {
-                next({name: 'login'})
+                next({name: 'welcome'})
             })
     }else{
         next();
