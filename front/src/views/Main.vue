@@ -45,6 +45,10 @@ const error = ref(false)
     <div v-if="error" class="bg-red-500/20 p-5 mb-5 rounded-2xl">
       <p class="text-sm text-red-500">{{error}}</p>
     </div>
+    <span class="box-decoration-clone bg-gradient-to-r from-indigo-600 to-pink-500 text-white px-2 text-9xl font-bold ">
+      Привет<br />
+      World
+    </span>
     <div class="grid md:grid-cols-2 gap-5">
       <div
           class="bg-gray-900/70 h-fit border border-gray-700/90 shadow-xl text-white p-5 rounded-2xl">
